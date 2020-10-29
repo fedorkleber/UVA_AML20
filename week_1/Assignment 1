@@ -1,0 +1,817 @@
+# %% markdown
+# # Applied Machine Learning
+# %% markdown
+# ## Table of contents
+# * [1. Notebook General Info](#1.-Notebook-General-Info)
+# * [2. Python Basics](#2.-Python-Basics)
+#     * [2.1 Basic Types](#2.1-Basic-Types)
+#     * [2.2 Lists and Tuples](#2.2-Lists-and-Tuples)
+#     * [2.3 Dictionaries](#2.3-Dictionaries)
+#     * [2.4 Conditions](#2.4-Conditions)
+#     * [2.5 Loops](#2.5-Loops)
+#     * [2.6 Functions](#2.6-Functions)
+# * [3. NumPy Basics](#3.-NumPy-Basics)
+#     * [3.1 Arrays](#3.1-Arrays)
+#     * [3.2 Functions and Operations](#3.2-Functions-and-Operations)
+#     * [3.3 Miscellaneous](#3.3-Miscellaneous)
+# * [4. Visualization with Matplotlib](#4.-Visualization-with-Matplotlib)
+# * [5. Nearest Neighbor Classification](#5.-Nearest-Neighbor-Classification)
+#     * [5.1 Digits Dataset](#5.1-Digits-Dataset)
+#     * [5.2 Distances](#5.2-Distances)
+#     * [5.3 Performance Experiments](#5.3-Performance-Experiments)
+#     * [5.4 Classification](#5.4-Classification)
+# * [6. Linear Algebra Basics](#6.-Linear-Algebra-Basics)
+# %% markdown
+# ## 1. Notebook General Info
+# %% markdown
+# ### Structure
+# - Notebooks consist of **cells**
+# - During this course we will use **Code** and **Markdown** cells
+# - Code in the cells is executed by pressing **Shift + Enter**. It also renders Markdown
+# - To edit a cell, double-click on it.
+# %% markdown
+# ### Markdown
+#
+# * Markdown is a lightweight markup language.
+# * You can emphasize the words: *word*, ~~word~~, **word**
+# * You can make lists
+#
+#     - item 1
+#     - item 2
+#         - subitem 2.1
+#         - subitem 2.2
+#
+# * And tables, as well
+#
+# | Language |Filename extension| First appeared |
+# |---------:|:----------------:|:--------------:|
+# |C         | `.h`, `.c`       | 1972           |
+# |C++       | `.h`, `.cpp`     | 1983           |
+# |Swift     | `.swift`         | 2014           |
+# |Python    | `.py`            | 1991           |
+#
+#
+# * Markdown allows you to add a code listing.
+#
+# ```
+# def sum(a, b):
+#       return a + b
+# ```
+#
+# * You can even add math expressions. Both inline $e^{i \phi} = \sin(\phi) + i \cos(\phi)$ and centered:
+# $$
+# \int\limits_{-\infty}^{\infty} e^{-x^2}dx = \sqrt{\pi}
+# $$
+#
+# * You can also add images, even from the remote resources:
+#
+# ![](http://technobotss.mdek12.org/wp-content/uploads/2016/09/Markdown-mark.png)
+#
+# * Markdown allows one to add hyperlinks. There is a good [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+# %% markdown
+# ### Code
+# * We will use Python.
+# * It is an interpreted language.
+# * When you execute the cell by pressing **Shift + Enter**, the code is interpreted line-by-line.
+# %% markdown
+# ## 2. Python Basics
+# %% markdown
+# Useful links:
+#
+# * CodeAcademy https://www.codecademy.com/en/tracks/python (recommended if you are new to Python!)
+# * The Hitchhiker’s Guide to Python http://docs.python-guide.org/en/latest/
+# * Video tutorials by *sentdex*: [Python 3 Basic Tutorial Series](https://www.youtube.com/watch?v=oVp1vrfL_w4&list=PLQVvvaa0QuDe8XSftW-RAxdo6OmaeL85M), [Intermediate Python Programming](https://www.youtube.com/watch?v=YSe9Tu_iNQQ&list=PLQVvvaa0QuDfju7ADVp5W1GF9jVhjbX-_)
+#
+# Some interesting talks from conferences:
+# * David Beazley: [Built in Super Heroes](https://youtu.be/lyDLAutA88s), [Modules and Packages](https://youtu.be/0oTh1CXRaQ0)
+# * Raymond Hettinger: [Transforming Code into Beautiful](https://youtu.be/OSGv2VnC0go), [ Beyond PEP 8](https://youtu.be/wf-BqAjZb8M)
+# %% markdown
+# ### 2.1 Basic Types
+# %% markdown
+# * Python is dynamically typed: you do not specify the type of a variable. Just `my_var = 1`
+# * Python is strongly typed: you can not add integer to string or None to integer
+# %% codecell
+# For now, this is just a magic
+from __future__ import print_function, division
+# %% codecell
+# Integer
+a = 2
+print(a)
+
+# Float
+a += 4.0
+print(a)
+
+# String
+b  = "Hello World"
+print(b)
+print(b + ' ' + str(42))
+
+# Boolean
+first_bool_here = False
+print(first_bool_here)
+
+# This is how formatting works
+print('My first program is:"%s"' % b) # old style
+print('My first program is:"{}"'.format(b)) # new style
+print(f'My first program is:"{b}"') # even newer style
+# %% codecell
+num = 42
+print(42 / 5) # a regular division
+print(42 // 5) # an integer division
+print(42 % 5) # a remainder
+# %% markdown
+# ### 2.2 Lists and Tuples
+# %% markdown
+# * `list` and `tuple` are the array-like types in Python
+# * `list` is mutable. `tuple` is immutable
+# * `list` is represented as `[...]`, `tuple` as `(...)`
+# * They both can store different types at the same time
+# * The index of the first element is `0`, it is called 'zero-indexed'
+# %% codecell
+# Lists
+empty_list = [] # creates an empty list
+list1 = [1, 2, 3] # creates a list with elements
+list2 = ['1st', '2nd', '3rd']
+print(list1) # prints the list
+print(list2)
+
+print(len(list2)) # prints the length of the list
+
+list2.append(2) # appends the item at the end
+print(list2) # prints the appended list
+
+list2.insert(2, 0) # inserts 0 at index 3 (zero-indexed)
+print(list2)
+
+list2[1] = 'new' # changes the second element of the list (lists are mutable)
+print(list2)
+# %% codecell
+# You can create a list of lists:
+list_of_lists = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(list_of_lists[1][2]) # second list, third element
+# %% codecell
+# Tuples
+# Empty tuple can't be created.
+# It is immutable. So it is just nothing
+tuple1 = (1,) # Comma is necessary. Otherwise it is a number in parenthesis
+tuple2 = ('orange',)
+tuple3 = ('fly', 32, None)
+
+super_tuple = tuple1 + tuple2 + tuple3
+print(super_tuple)
+
+super_tuple[1] = 'new' # trying to change an element of a tuple raises an error (tuples are immutable)
+# %% markdown
+# * Above we showed how to create and print lists.
+# * How to find the length of the list and how to append or insert the items in an already created list.
+# * There are several other operations which we can perform with lists:
+#     * removing elements from the list
+#     * joining two lists
+#     * sorting
+#     * etc
+#
+# There is an interesting [cheat sheet](http://www.pythonforbeginners.com/lists/python-lists-cheat-sheet/) you may find useful.
+#
+# Another very useful operation on lists is **Slicing**. It is a thing of Python.
+# * Slicing allows you to access sublists
+# * Slicing does not create a copy of the list when it is called
+# * Slicing makes Python so useful for matrix manipulation
+# %% codecell
+# This is the worst way of creating a list of consequent integers.
+# But now we use it just for demostration
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+print(numbers[1:]) # You can slice it from the given index
+print(numbers[:-1]) # You can slice it till the given index
+print(numbers[1:-2]) # You can combine them
+print(numbers[::2]) # You can choose each second
+print(numbers[2:-2][::2]) # You can chain slicing
+# %% markdown
+# ### 2.3 Dictionaries
+# %% markdown
+# * Dictionary is a **Key-Value** storage
+# * Dictionaries are mutable by default
+# * Dictionaries are useful for linking items
+# * In some versions of Python, dictionaries are sorted, in others, they are not.
+# %% codecell
+emptydict = {} # creates empty dict
+user = {'id': '0x123456', 'age': 28, 'authorized': True}
+print(user)
+
+days = {
+    1: "Mon",
+    2: "Tues",
+    3: "Wed",
+    4: "Thu",
+    5: "Fri",
+    6: "Sat",
+    7: "Sun"
+} # A dict with items
+
+print(days.keys()) # prints keys
+print(days) # prints whole dict
+age = user['age'] # accesses the element of the dictionay with key 'age'
+print(age)
+# %% codecell
+my_dict = {
+    1: '1',
+    '1': 1
+}
+# Keys are not casted. '1' and 1 are not the same key
+print(my_dict[1] == my_dict['1'])
+
+my_dict['one'] = False
+my_dict[123] = 321
+print(my_dict)
+# %% markdown
+# For the further study of dictionary manipulation in Python refer to this [tutorial](http://www.pythonforbeginners.com/dictionary/dictionary-manipulation-in-python ).
+# %% markdown
+# ### 2.4 Conditions
+# %% codecell
+is_visible = False
+if is_visible:
+    print("I am visible")
+else:
+    print("You can not see me")
+# %% markdown
+# As this is the first appearance of the nested structure, we must clarify the following:
+# * In Python all nested code structures are defined by indentation.
+# * Standard indentation is 4 spaces (or 1 tab)
+# %% codecell
+animals = ['cat', 'dog', 'monkey', 'elephant']
+
+if 'cat' in animals:
+    print('Cat is here')
+
+if len(animals) > 2 and 'fish' not in animals:
+    print('There are many animals but fish is not here')
+
+if 'whale' in animals or 'dog' in animals:
+    print('At least one of my favorite animals is in the list')
+# %% codecell
+code = 345
+
+if code == 200:
+    print('success')
+elif code == 404:
+    print('page not found')
+elif 300 <= code < 400:
+    print('redirected')
+else:
+    print('unknown error')
+# %% markdown
+# ### 2.5 Loops
+# %% markdown
+# * There are 2 types of loops in Python: `while` and `for`
+# * `while` loop checks the condition before executing the loop body
+# * `for` iterates over the sequence of elements
+# %% codecell
+# while
+i = 0
+while i < 3:
+    print(i)
+    i += 1
+# %% codecell
+# for loop
+for animal in animals:
+    print(animal)
+
+# In order to make a c-like loop,
+# you have to create a list of consecutive numbers
+print('\nBad way:')
+numbers = [0, 1, 2, 3, 4]
+for number in numbers:
+    print(number)
+
+# As we already stated, it is not the best way of creating such lists
+# Here is the best way:
+print('\nGood way:')
+for number in range(5):
+    print(number)
+
+print('\nAdvanced example:')
+for number in reversed(range(10, 22, 2)):
+    print(number)
+# %% markdown
+# ### 2.6 Functions
+# %% markdown
+# * functions are declared with `def` statement
+# * function is an object, like float, string, etc.
+# %% codecell
+def function_name():
+    print ('Hello AML students')
+
+function_name()
+# %% codecell
+# Create a function that multiplies a number by 5 if it is above a given threshold,
+# otherwise square the input.
+def manipulate_number(number, threshold):
+    # Check whether the number is higher than the threshold.
+    if number > threshold:
+        return number * 5
+    else:
+        return number ** 2
+
+print(manipulate_number(4, 6))
+print(manipulate_number(8, 7))
+# %% codecell
+def linear(x, k, b=0): # b=0 if b is not specified in function call
+    return k * x + b
+
+print(linear(1, 3.0)) # we don't pass any keys of the arguments
+print(linear(k=1, x=3.0)) # we pass the keys, sometimes to reorder arguments.
+print(linear(1, k=3.0, b=3.0)) # we pass b=3. and specify it because b=3.0 is not the default value
+# %% codecell
+def are_close(a, b):
+    return (a - b) ** 2 < 1e-6
+
+# Functions could be passed as arguments
+def evaluate(func, arg_1 ,arg_2):
+    return func(arg_1, arg_2)
+
+print(evaluate(are_close, 0.333, 1.0 / 3))
+# %% markdown
+# * If you are still very new to Python:
+#     * Implement some simple functions and print the results
+#     * Please ask questions if pieces of code do not do what you want them to do
+# * You can always get the information about the function just by caling **help**:
+#
+# ```Python
+# help(any_function)
+# ```
+# * In Jupyter Notebook, you can also get the info by pushing **Tab Tab** with pressed **Shift**
+# %% codecell
+# Create here your own functions, if you want
+# Create a new cell by typing ctrl+b
+# %% markdown
+# ## 3. NumPy Basics
+# %% markdown
+# * A very nice part of Python is that there are a lot of 3rd party libraries.
+# * The most popular library for matrix manipulations / linear algebra is [**NumPy**](http://www.numpy.org/).
+# * The official website says:
+# > NumPy is the fundamental package for scientific computing with Python.
+#
+# * NumPy core functions are written in **C/C++** and **Fortran**.
+# * NumPy functions work faster than pure Python functions (or at least with the same speed).
+# %% codecell
+# The first import
+import numpy as np
+# %% markdown
+# * Easy enough!
+# * There are several ways of importing libraries:
+#     * `import library` - import the full library. You can access its functions: `library.utils.somefunc(x)`
+#     * `import library as lib` -  the same as above-described, but more convenient: `lib.utils.other_func(x, y)`
+#     * `from library.utils import somefunc` - only one function is imported: `somefunc(x)`
+# * `import numpy as np` is a standard convention of importing NumPy.
+# %% markdown
+# ### 3.1 Arrays
+# %% markdown
+# * The feature of **NumPy** is **Array**.
+# * An array is close to the list data type, but it is extended with several useful methods.
+# %% codecell
+# you can create an array of zeros
+a = np.zeros(5)
+print(a)
+
+# or an array of consecutive numbers
+b = np.arange(7)
+print('1...6:')
+print(b)
+
+# or even an array from a list
+c = np.array([1, 3, 5, 7, 12, 19])
+
+print('An element of c:')
+print(c[4])
+print('Length:', len(c))
+# %% markdown
+# * You can also create n-dimensional arrays:
+#     * an array of arrays
+#     * an array of arrays of arrays
+#     * ...
+# * They have additional properties which are insignificant for now, but will be exploited later during this course
+# * You can transform an n-dimensional array to a plane array and vice versa just  by reshaping
+# %% codecell
+# A 2-dimensional array
+a = np.array([[1, 2], [3, 4]])
+print(a)
+
+# you can change its shape to make it a 1-dimensional array
+print(a.ravel())
+print(a.reshape(4))
+
+# and vice versa
+b = a.ravel()
+print(b.reshape((2, 2)))
+
+# you can access a row or a column
+print('2nd column:', a[:, 1])
+print('1st row:', a[0, :])
+# %% markdown
+# ### 3.2 Functions and Operations
+#
+# * NumPy supports basics operations on an array and a number
+# %% codecell
+newarray = np.zeros(8)
+# instead of adding a number in a loop,
+# you can do it in one line
+newarray += 8
+print(newarray)
+
+# the same for other basic operations
+newarray *= 3
+print(newarray)
+
+# and even with slicing
+newarray[::2] /= 8
+print(newarray)
+# %% markdown
+# * Numpy also supports operations on several arrays of the same length
+# * These operations are elemetwise
+# %% codecell
+arr_1 = np.array([1, 9, 3, 4])
+arr_2 = np.arange(4)
+print('Arrays:')
+print(arr_1)
+print(arr_2)
+
+print('Addition:')
+print(arr_1 + arr_2)
+print(np.add(arr_1, arr_2)) # the same
+
+print('Multiplication:')
+print(arr_1 * arr_2)
+print(np.multiply(arr_1, arr_2)) # the same
+
+print('Division:')
+print(arr_2 / arr_1)
+print(np.divide(1.0 * arr_2, arr_1)) # the same
+# %% markdown
+# * NumPy provides one with a rich variaty of mathematical functions
+# * Atomic functions ($\sin(x)$, $\cos(x)$, $\ln(x)$, $x^p$, $e^x, \dots$) are elementwise
+# * There are several functions, which allows one to compute statistics:
+#     * mean of the elements of an array
+#     * standard deviation
+#     * ...
+# %% codecell
+x = np.linspace(0, 1, 6)
+print('x:')
+print(x)
+
+print('Mean x:')
+print(np.mean(x))
+
+print('Std x:')
+print(x.std())
+
+print('x^2:')
+print(x*x) # as elementwise product
+print(np.square(x)) # with a special function
+print(np.power(x, 2)) # as a power function with power=2
+print(x**2) # as you are expected to do it with a number
+
+print('sin(x):')
+print(np.sin(x))
+
+print('Mean e^x:')
+print(np.mean(np.exp(x)))
+# %% markdown
+# ### 3.3 Miscellaneous
+# %% codecell
+# Indexing
+x = np.linspace(0, np.pi, 10)
+y = np.cos(x) - np.sin(2 * x)
+print('x =', x, '\n')
+print('y =', y, '\n')
+# we can create the boolean mask of elements and pass it as indices
+mask = y > 0
+print('mask =', mask, '\n')
+print('positive y =', y[mask], '\n')
+# %% codecell
+# NumPy has `random` package
+x = np.random.random()
+print(x)
+
+# uniform [-2, 8)
+rand_arr = np.random.uniform(-2, 8, size=3)
+print('Array of random variables')
+print(rand_arr)
+
+# here is the normal distribution
+print('N(x|m=0, s=0.1):')
+print(np.random.normal(scale=0.1, size=4))
+# %% codecell
+# fast search
+x = np.array([1, 2, 5, -1])
+print(np.where(x < 0))
+
+# retrieve the index of max element
+print(np.argmax(x))
+
+# sory array
+print(np.sort(x))
+# %% markdown
+# * There is a lot which you can do with Numpy.
+# * For further study and practice of Numpy, we refer you to this [tutorial](http://scipy.github.io/old-wiki/pages/Tentative_NumPy_Tutorial)
+# * Here is a good [list](https://github.com/rougier/numpy-100) of numpy tasks.
+# * You can also check other packages from **[SciPy](https://www.scipy.org)** ecosystem.
+# * You may also be interested in [**scikit-learn**](http://scikit-learn.org/stable/) - tools for machine learning in Python
+# %% markdown
+# ## 4. Visualization with Matplotlib
+# %% markdown
+# * We use **Matplotlib** for plots and data visualization
+# * There is a [tutorial](http://matplotlib.org/users/pyplot_tutorial.html).
+# * Here are some examples from Matplotlib gallery
+#
+# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+#
+# <div class="container" style="max-width:100%">
+#     <div class="row">
+#         <div class="col-sm-6" style="display: flex; height: 300px;">
+#             <img src="http://matplotlib.org/_images/fill_demo1.png"
+#                  style="max-width: 100%; max-height: 100%; margin: auto;">
+#         </div>
+#             <div class="col-sm-6" style="display: flex; height: 300px;">
+#         <img src="http://matplotlib.org/_images/errorbar_limits.png"
+#              style="max-width: 100%; max-height: 100%; margin: auto;">
+#         </div>
+#     </div>
+#     <div class="row">
+#         <div class="col-sm-6" style="display: flex; height: 300px;">
+#             <img src="http://matplotlib.org/_images/subplot_demo.png"
+#                  style="max-width: 100%; max-height: 100%; margin: auto;">
+#         </div>
+#         <div class="col-sm-6" style="display: flex; height: 300px;">
+#             <img src="http://matplotlib.org/_images/histogram_demo_features2.png"
+#                  style="max-width: 100%; max-height: 100%; margin: auto;">
+#         </div>
+#     </div>
+# </div>
+# %% codecell
+# We import `pyplot` from `matplotlib` as `plt`
+import matplotlib.pyplot as plt
+
+# We add %matplotlib flag to specify how the figures should be shown
+#     inline - static pictures in notebook
+#     notebook - interactive graphics
+%matplotlib inline
+# %% codecell
+# let's plot a simple example
+x = np.arange(100)
+y = x ** 2 - x
+
+plt.plot(y)
+plt.show() # that's it
+# %% codecell
+# A more complex example
+n_samples = 100
+x = np.linspace(0.0, 1.0, n_samples)
+y = x**3 / (np.exp(10 * x + 1e-8) - 1)
+y /= y.max()
+y_samples = np.abs(y + 0.1 * y * np.random.normal(size=n_samples))
+
+
+plt.figure(figsize=(8, 5))
+plt.plot(x, y_samples, 'o', c='orange', label='experiment')
+plt.plot(x, y, lw=3, label='theory')
+plt.grid()
+plt.title("Planck's law", fontsize=18)
+plt.legend(loc='best', fontsize=14)
+plt.ylabel('Relative spectral radiance', fontsize=14)
+plt.xlabel('Relative frequency', fontsize=14)
+plt.show()
+# %% markdown
+# ## 5. Nearest Neighbor Classification
+# %% markdown
+# * We have a dataset of objects of several classes
+# * We expect two objects from the same class to be close
+# * Two objects from different classes are supposed to be distant
+# * The query object is supposed to have the same class as its nearest neighbor
+# %% markdown
+# ### 5.1 Digits Dataset
+#
+# * It contains handwritten digits 0 through 9
+# * Each object is an $8 \times 8$ grayscale image
+# * We consider each pixel of the image as a separate feature of the object
+# %% codecell
+import sklearn.datasets
+
+# We load the dataset
+digits = sklearn.datasets.load_digits()
+
+# Here we load up the images and labels and print some examples
+images_and_labels = list(zip(digits.images, digits.target))
+for index, (image, label) in enumerate(images_and_labels[:10]):
+    plt.subplot(2, 5, index + 1)
+    plt.axis('off')
+    plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
+    plt.title('Training: {}'.format(label), y=1.1)
+plt.show()
+# %% codecell
+images_1 = digits.images[digits.target == 1]
+images_5 = digits.images[digits.target == 5]
+
+for i in range(5):
+    plt.subplot(2, 5, i + 1)
+    plt.axis('off')
+    plt.imshow(images_1[i], cmap=plt.cm.gray_r, interpolation='nearest')
+
+    plt.subplot(2, 5, i + 6)
+    plt.axis('off')
+    plt.imshow(images_5[i], cmap=plt.cm.gray_r, interpolation='nearest')
+plt.show()
+# %% markdown
+# * Ones look similar. Fives also looks similar
+# * Fives and Ones look different
+# %% markdown
+# ### 5.2 Distances
+#
+# * In order to talk about close and distant objects, we have to define the **distance (metric)**
+# * Distance is a function $F(\cdot, \cdot)$ of 2 elements which returns a number
+# * Here are the properties of distance:
+#     1. $F(x, y) \geq 0$
+#     2. $F(x, y) = 0 \Leftrightarrow x = y$
+#     3. $F(x, y) = F(y, x)$
+#     4. $F(x, z) \leq F(x, y) + F(y, z)$
+#
+# * Let's look at the **Eucledian distance** as it is the most intuitive for us:
+# $$
+# F(x, y) = \sqrt{\sum_{i=1}^{d} (x_{i} - y_{i})^{2}}.
+# $$
+#
+# Now it is time to implement it.
+# %% codecell
+# First of all, let's implement it in the most trivial way
+# without using numpy arrays, just to understand what is going on
+def euclidean_distance_simple(x, y):
+    # First, make sure x and y are of equal length.
+    assert(len(x) == len(y))
+    d = 0.0
+    for i in range(len(x)):
+        d += (x[i]-y[i])**2
+    return np.sqrt(d)
+# %% codecell
+x1 = np.array([0.,0.])
+y1 = np.array([5.,2.])
+
+x2 = np.array([0.,1.,3.])
+y2 = np.array([9.,1.,4.5])
+# %% markdown
+# Now you can test your functions. The expected values are **5.385...** and **9.124...**
+# %% codecell
+print(euclidean_distance_simple(x1, y1))
+print(euclidean_distance_simple(x2, y2))
+# %% codecell
+# Let's implement it in a more effective way
+# use numpy arrays
+# use all the benefits of numpy
+def euclidean_distance_numpy(x, y):
+    # x, y - numpy arrays
+    assert(len(x) == len(y))
+    d = 0.0
+    temp = (x - y)**2
+    d = np.sum(temp)
+    return np.sqrt(d)
+# %% codecell
+print(euclidean_distance_numpy(x1, y1))
+print(euclidean_distance_numpy(x2, y2))
+# %% markdown
+# ### 5.3 Performance Experiments
+#
+# * We implemented the Euclidean distance in 2 ways. Now we are able to compare their performance
+# * We measure the time consumption of the functions
+# * We test the perfomance of them while being executed with random vectors of certain sizes
+# %% codecell
+import time
+
+sizes = range(1, 1000, 10)
+
+res_simple = []
+res_numpy = []
+
+
+for size in sizes:
+
+    x = np.random.random(size=size)
+    y = np.random.random(size=size)
+
+    time_0 = time.time()
+    _ = euclidean_distance_simple(x, y)
+    res_simple.append(time.time() - time_0)
+
+    time_0 = time.time()
+    _ = euclidean_distance_numpy(x, y)
+    res_numpy.append(time.time() - time_0)
+
+res_simple = np.array(res_simple)
+res_numpy = np.array(res_numpy)
+# %% codecell
+plt.figure(figsize=(9, 5))
+
+plt.plot(sizes, 10**6 * res_simple, lw=3, label='simple')
+plt.plot(sizes, 10**6 * res_numpy, lw=3, label='numpy')
+
+plt.legend(loc='best', fontsize=14)
+plt.xlabel('size', fontsize=15)
+plt.ylabel('times, mks', fontsize=15)
+plt.grid()
+plt.show()
+# %% markdown
+# * Pure Python works slower than NumPy
+# * Always use NumPy when it is possible
+# %% markdown
+# ### 5.4 Classification
+#
+# * We should divide our dataset into a training set and a test set.
+# * In order to predict the class of an object, we will iterate over the objects in the training set
+# * The predicted class is the class of the closest object
+# %% codecell
+n_objects = digits.images.shape[0]
+train_test_split = 0.7
+train_size = int(n_objects * train_test_split)
+indices = np.arange(n_objects)
+np.random.shuffle(indices)
+
+train_indices, test_indices = indices[:train_size], indices[train_size:]
+train_images, train_targets = digits.images[train_indices], digits.target[train_indices]
+test_images, test_targets = digits.images[test_indices], digits.target[test_indices]
+# %% codecell
+train_images = train_images.reshape((-1, 64))
+test_images = test_images.reshape((-1, 64))
+# %% codecell
+def predict_object_class(vec, x_train, y_train):
+    # vec.shape: [64]
+    # x_train.shape: [N_objects, 64]
+    # y_train.shape: [N_objects]
+
+    best = 999999
+    for i, sample in enumerate(x_train):
+        candidate = euclidean_distance_numpy(sample, vec)
+        if candidate < best:
+            best = candidate
+            best_i = i
+    return y_train[best_i]
+
+# %% codecell
+def predict(x, x_train, y_train):
+    # it is not the best way, but it is easy to understand
+    classes = []
+    for vec in x:
+        predicted_cls = predict_object_class(vec, x_train, y_train)
+        classes.append(predicted_cls)
+    return np.array(classes)
+# %% codecell
+predicted_targets = predict(test_images, train_images, train_targets)
+accuracy = np.mean(predicted_targets == test_targets)
+print("Accuracy {:.1f}%".format(accuracy * 100))
+# %% codecell
+correct = predicted_targets == test_targets
+incorrect = ~correct
+
+
+f, axes = plt.subplots(2, 5, figsize=(8, 3))
+
+
+for ax, image, y_pred, y_test in zip(axes[0],
+                                     test_images[correct],
+                                     predicted_targets[correct],
+                                     test_targets[correct]):
+
+    ax.imshow(image.reshape((8, 8)), cmap=plt.cm.gray_r, interpolation='nearest')
+    ax.set_title('Pred: {}, Real: {}'.format(y_pred, y_test))
+    ax.set_axis_off()
+
+for ax, image, y_pred, y_test in zip(axes[1],
+                                     test_images[incorrect],
+                                     predicted_targets[incorrect],
+                                     test_targets[incorrect]):
+
+    ax.imshow(image.reshape((8, 8)), cmap=plt.cm.gray_r, interpolation='nearest')
+    ax.set_title('Pred: {}, True: {}'.format(y_pred, y_test))
+    ax.set_axis_off()
+
+
+plt.tight_layout()
+plt.show()
+# %% markdown
+# * You can try to use other <a href="https://en.wikipedia.org/wiki/Metric_(mathematics)#Examples">metrics</a>
+# * You can experiment with other datasets:
+#     * **MNIST**:
+#         1. [Download](http://yann.lecun.com/exdb/mnist/)
+#         2. `from dataset_utils import load_mnist`
+#         3. `train = list(load_mnist('training', path='<PATH TO A FOLDER>'))`
+#     * **CIFAR-10** & **CIFAR-100**:
+#         1. [Download](https://www.cs.toronto.edu/~kriz/cifar.html)
+#         2. `from dataset_utils import load_cifar`
+#         3. `data = load_cifar('<PATH TO A FILE>')`
+#
+# %% markdown
+# ## 6. Linear Algebra Basics
+# * This introduction is devoted to Python and NumPy basics.
+# * We used 1-dimensional NumPy arrays for data manipulation.
+# * During the coming assignments, n-dimensional (2, 3 and even 4-dimensional) arrays will be exploited
+# * In order to make it easier, we provide you with several useful links
+#     * [Linear Algebra Review and Reference](http://cs229.stanford.edu/section/cs229-linalg.pdf). Chapters **1.1-3.2, 3.5** provide one with almost all the necessities of linear algebra for deep learning
+#     * [The Matrix Cookbook](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf) could be used as a cheat sheet
+#     * [Deep Learning](http://www.deeplearningbook.org) is an ultimate book. An explanation of any aspects of deep learning could be found there.
+# %% codecell
